@@ -37,7 +37,7 @@ body::before {
     transition: all 0.3s ease;
 }
 
-/* Для ПК (ширина больше 600px) */
+/* Для устройств с шириной экрана больше 600px (ПК и планшеты в ландшафте) */
 @media (min-width: 601px) {
     body {
         padding: 40px;
@@ -114,8 +114,9 @@ body::before {
     }
 }
 
-/* Для телефонов (ширина до 600px) - на весь экран */
-@media (max-width: 600px) {
+/* Для телефонов (ширина экрана до 600px) - включая режим "Версия для ПК" */
+/* Используем @media (max-width: 600px) и @media (pointer: coarse) для определения сенсорного экрана */
+@media (max-width: 600px), (pointer: coarse) and (max-width: 900px) {
     body {
         padding: 12px;
     }
@@ -188,6 +189,73 @@ body::before {
     .divider span {
         font-size: 9px;
         padding: 0 12px;
+    }
+}
+
+/* Специальное правило для экранов меньше 900px, но с включённым desktop режимом */
+/* Определяем по ширине экрана и соотношению - если ширина маленькая, но запрошен desktop */
+@media (min-width: 601px) and (max-width: 900px) and (pointer: coarse) {
+    body {
+        padding: 12px;
+    }
+    
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 20px 16px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    .subtitle {
+        font-size: 13px;
+        margin-bottom: 26px;
+    }
+    
+    .buttons-grid {
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .config-button {
+        padding: 18px 20px;
+        gap: 14px;
+    }
+    
+    .button-icon {
+        font-size: 32px;
+    }
+    
+    .button-title {
+        font-size: 16px;
+    }
+    
+    .button-desc {
+        font-size: 11px;
+    }
+    
+    .button__text {
+        padding: 7px 16px;
+        font-size: 12px;
+    }
+    
+    .static-buttons-row {
+        gap: 12px;
+    }
+    
+    .config-button.static {
+        padding: 14px 12px;
+    }
+    
+    .flag-icon {
+        width: 26px;
+        height: 18px;
+    }
+    
+    .config-button.static .button-title-static {
+        font-size: 15px;
     }
 }
 
