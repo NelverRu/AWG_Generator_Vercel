@@ -65,6 +65,4 @@ async function generateConfig(configType, buttonId) {
 
 // Назначаем обработчики для кнопок
 document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
-document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
-document.getElementById('generateButton3').onclick = () => generateConfig(3, 'generateButton3');
-document.getElementById('generateButton4').onclick = () => generateConfig(4, 'generateButton4');
+document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');  
