@@ -57,7 +57,6 @@ function downloadStaticConfig(countryCode, countryName) {
         const randomNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
         const fileName = `AmneziaWG_${countryName}_${randomNumber}.conf`;
         
-        // Создаём blob и скачиваем
         const blob = new Blob([config], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -70,21 +69,18 @@ function downloadStaticConfig(countryCode, countryName) {
     }
 }
 
-// Функция для генерации динамического конфига
+// Функция для генерации динамического конфига (Vercel)
 async function generateConfig(configType, buttonId) {
     const button = document.getElementById(buttonId);
     const buttonText = button.querySelector('.button__text');
-
-    // Сохраняем оригинальный текст кнопки
     const originalText = buttonText.textContent;
     
-    // Показываем загрузку
     button.disabled = true;
     button.classList.add("button--loading");
 
     try {
-        // Отправляем запрос к Netlify Function
-        const response = await fetch('/.netlify/functions/warp', {
+        // ВАЖНО: URL для Vercel
+        const response = await fetch('/api/warp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,7 +91,6 @@ async function generateConfig(configType, buttonId) {
         const data = await response.json();
 
         if (data.success) {
-            // Создаём файл для скачивания
             const randomNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
             const fileName = `AmneziaWG_${configType}_${randomNumber}.conf`;
             
@@ -104,7 +99,6 @@ async function generateConfig(configType, buttonId) {
             link.download = fileName;
             link.click();
 
-            // Обновляем текст кнопки
             buttonText.textContent = `✅ Скачано!`;
             setTimeout(() => {
                 buttonText.textContent = originalText;
@@ -123,16 +117,13 @@ async function generateConfig(configType, buttonId) {
             buttonText.textContent = originalText;
         }, 2000);
     } finally {
-        // Убираем загрузку
         button.disabled = false;
         button.classList.remove("button--loading");
     }
 }
 
-// Назначаем обработчики для статических кнопок
+// Назначаем обработчики
 document.getElementById('staticFI').onclick = () => downloadStaticConfig('FI', 'Finland');
 document.getElementById('staticDE').onclick = () => downloadStaticConfig('DE', 'Germany');
-
-// Назначаем обработчики для динамических кнопок
 document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
 document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
