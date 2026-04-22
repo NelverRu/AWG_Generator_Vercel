@@ -40,15 +40,18 @@ async function generateConfig(configType, buttonId) {
             }, 2000);
             
             status.innerHTML = '✅ <strong>Успешно!</strong> Конфигурация сгенерирована и скачана.';
-            status.style.color = '#4caf50';
+            status.style.color = '#00ff64';
+            info.textContent = '🎉 Файл сохранён. Импортируйте его в AmneziaWG';
         } else {
             status.innerHTML = '❌ <strong>Ошибка:</strong> ' + data.message;
-            status.style.color = '#f44336';
+            status.style.color = '#ff4444';
+            info.textContent = '⚠️ Попробуйте позже или выберите другой тип конфигурации';
         }
     } catch (error) {
         console.error('Error:', error);
         status.innerHTML = '❌ <strong>Ошибка:</strong> Не удалось сгенерировать конфигурацию. Проверьте соединение.';
-        status.style.color = '#f44336';
+        status.style.color = '#ff4444';
+        info.textContent = '🔄 Проверьте интернет-соединение и попробуйте снова';
     } finally {
         // Убираем загрузку
         button.disabled = false;
@@ -58,6 +61,7 @@ async function generateConfig(configType, buttonId) {
         setTimeout(() => {
             if (status.innerHTML !== '') {
                 status.innerHTML = '';
+                info.textContent = '✨ Нажмите на кнопку для генерации конфигурации';
             }
         }, 5000);
     }
@@ -65,4 +69,4 @@ async function generateConfig(configType, buttonId) {
 
 // Назначаем обработчики для кнопок
 document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
-document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');  
+document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
