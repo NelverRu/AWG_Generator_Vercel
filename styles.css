@@ -103,28 +103,32 @@ h1 {
     margin-top: 5px;
 }
 
-/* Стили для статических кнопок */
+/* Стили для статических кнопок (упрощённые) */
 .config-button.static {
-    padding: 15px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 12px;
     background: rgba(0, 255, 100, 0.05);
     border-color: rgba(0, 255, 100, 0.3);
 }
 
 .config-button.static .button-icon {
     font-size: 28px;
+    margin: 0;
 }
 
-.config-button.static .button-title {
+.config-button.static .button-title-static {
     font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.3px;
 }
 
-.config-button.static .button-desc {
-    font-size: 10px;
-}
-
-.config-button.static .button__text {
-    padding: 6px 14px;
-    font-size: 11px;
+/* Убираем эффект масштабирования иконки у статических кнопок */
+.config-button.static:hover .button-icon {
+    transform: none;
 }
 
 /* Разделитель */
@@ -150,7 +154,7 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* Стеклянные кнопки */
+/* Стеклянные кнопки (динамические) */
 .config-button {
     display: flex;
     align-items: center;
@@ -212,7 +216,7 @@ h1 {
     transform: scale(1.05);
 }
 
-/* Контент кнопки */
+/* Контент кнопки (динамические) */
 .button-content {
     flex: 1;
 }
@@ -232,7 +236,7 @@ h1 {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Текст на кнопке скачивания */
+/* Текст на кнопке скачивания (динамические) */
 .button__text {
     background: linear-gradient(135deg, #00ff64, #00cc50);
     padding: 8px 20px;
@@ -287,15 +291,6 @@ h1 {
     }
 }
 
-/* Информационная строка */
-.info {
-    text-align: center;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.3);
-    margin-top: 25px;
-    letter-spacing: 0.3px;
-}
-
 /* Адаптивность */
 @media (max-width: 600px) {
     .container {
@@ -323,23 +318,15 @@ h1 {
     
     .config-button.static {
         padding: 12px 10px;
+        gap: 8px;
     }
     
     .config-button.static .button-icon {
         font-size: 22px;
     }
     
-    .config-button.static .button-title {
-        font-size: 13px;
-    }
-    
-    .config-button.static .button-desc {
-        font-size: 9px;
-    }
-    
-    .config-button.static .button__text {
-        padding: 5px 10px;
-        font-size: 10px;
+    .config-button.static .button-title-static {
+        font-size: 14px;
     }
     
     .config-button {
@@ -371,11 +358,6 @@ h1 {
     .divider span {
         font-size: 9px;
         padding: 0 12px;
-    }
-    
-    .info {
-        margin-top: 20px;
-        font-size: 10px;
     }
 }
 
