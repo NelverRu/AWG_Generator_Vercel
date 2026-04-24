@@ -1,66 +1,59 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
-    <meta name="description" content="Генератор конфигураций AmneziaWG с поддержкой WARP">
-    <meta name="theme-color" content="#000000">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AmneziaWG Config Generator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Дополнительные стили для полного экрана */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100vh;
-        }
-    </style>
 </head>
 <body>
+
+    <!-- Добавляем фоновое изображение -->
+    <div class="fullscreen-bg"></div>
+    
+    <!-- Затемнение поверх картинки, чтобы текст читался (опционально) -->
+    <div class="overlay"></div>
+
     <div class="container">
         <h1>AmneziaWG Generator</h1>
-                
-        <!-- Динамические конфиги -->
+        <p class="subtitle">Выберите устройство для генерации конфигурации</p>
+        
         <div class="buttons-grid">
-            <button id="generateButton1" class="config-button">
+            <button class="config-button">
                 <span class="button-icon">🖥️</span>
                 <div class="button-content">
-                    <span class="button-title">Компьютер</span>
-                    </div>
+                    <div class="button-title">Компьютер</div>
+                    <div class="button-desc">Windows, macOS, Linux</div>
+                </div>
                 <span class="button__text">Сгенерировать</span>
             </button>
 
-            <button id="generateButton2" class="config-button">
+            <button class="config-button">
                 <span class="button-icon">📱</span>
                 <div class="button-content">
-                    <span class="button-title">Телефон</span>
-                    </div>
+                    <div class="button-title">Телефон</div>
+                    <div class="button-desc">iOS, Android</div>
+                </div>
                 <span class="button__text">Сгенерировать</span>
             </button>
         </div>
 
-        <!-- Разделитель -->
         <div class="divider">
             <span>статические серверы</span>
         </div>
 
-        <!-- Статические конфиги (FI и DE) -->
         <div class="static-buttons-row">
-            <button id="staticFI" class="config-button static">
-                <span class="button-icon flag-icon flag-fi"></span>
+            <button class="config-button static">
+                <span class="flag-icon flag-fi"></span>
                 <span class="button-title-static">Финляндия</span>
             </button>
-
-            <button id="staticDE" class="config-button static">
-                <span class="button-icon flag-icon flag-de"></span>
+            <button class="config-button static">
+                <span class="flag-icon flag-de"></span>
                 <span class="button-title-static">Германия</span>
             </button>
         </div>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
