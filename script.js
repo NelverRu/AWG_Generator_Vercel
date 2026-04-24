@@ -44,6 +44,18 @@ PersistentKeepalive = 25
 Endpoint = 89.22.237.214:4500`
 };
 
+// Функция для получения текущего времени по Москве (UTC+3) в формате часы_минуты
+function getMoscowTimeString() {
+    const now = new Date();
+    // Устанавливаем время по Москве (UTC+3)
+    const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+    
+    const hours = String(moscowTime.getUTCHours()).padStart(2, '0');
+    const minutes = String(moscowTime.getUTCMinutes()).padStart(2, '0');
+    
+    return `${hours}_${minutes}`;
+}
+
 // Универсальная функция для скачивания файла (работает на всех устройствах)
 function downloadFile(content, fileName, mimeType = 'application/text') {
     // Пытаемся использовать атрибут download (работает на большинстве ПК)
@@ -94,8 +106,8 @@ function downloadStaticConfig(countryCode, countryName) {
     }
     
     try {
-        const randomNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
-        const fileName = `AmneziaWG_${countryName}_${randomNumber}.conf`;
+        // Имя файла: AWG_DE.conf или AWG_FI.conf
+        const fileName = `AWG_${countryCode}.conf`;
         
         // Используем универсальную функцию скачивания с правильным MIME-типом
         downloadFile(config, fileName, 'application/x-wireguard-profile');
@@ -125,8 +137,12 @@ async function generateConfig(configType, buttonId) {
         const data = await response.json();
 
         if (data.success) {
-            const randomNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
-            const fileName = `AmneziaWG_${configType}_${randomNumber}.conf`;
+            // Получаем текущее время по Москве в формате часы_минуты
+            const moscowTime = getMoscowTimeString();
+            
+            // Формируем имя файла: AWG_PC_15_30.conf или AWG_Mob_15_30.conf
+            const devicePrefix = configType === 1 ? 'PC' : 'Mob';
+            const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
             
             // Декодируем base64 и скачиваем
             const configContent = atob(data.content);
