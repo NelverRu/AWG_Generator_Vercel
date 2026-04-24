@@ -1,115 +1,3 @@
-// ========== КИБЕРПАНК ФОН (СЕТКА + НЕОН) ==========
-function initCyberpunkBackground() {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'cyberpunkCanvas';
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.zIndex = '-2';
-    document.body.insertBefore(canvas, document.body.firstChild);
-    
-    const ctx = canvas.getContext('2d');
-    
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    
-    canvas.width = width;
-    canvas.height = height;
-    
-    // Настройки сетки
-    const gridSize = 40;
-    let offset = 0;
-    
-    // Создаём градиент для фона
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#0a0a0f');
-    gradient.addColorStop(1, '#0d0d1a');
-    
-    function drawGrid() {
-        // Заливка фона
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, width, height);
-        
-        // Рисуем горизонтальные линии
-        ctx.beginPath();
-        ctx.strokeStyle = '#00ffea';
-        ctx.lineWidth = 0.5;
-        ctx.shadowBlur = 3;
-        ctx.shadowColor = '#00ffea';
-        
-        for (let y = offset % gridSize; y < height; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(width, y);
-            ctx.stroke();
-        }
-        
-        // Рисуем вертикальные линии
-        for (let x = offset % gridSize; x < width; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-        }
-        
-        // Добавляем случайные "неоновые" точки на пересечениях
-        ctx.fillStyle = '#ff00ea';
-        ctx.shadowBlur = 5;
-        ctx.shadowColor = '#ff00ea';
-        
-        for (let x = gridSize; x < width; x += gridSize) {
-            for (let y = gridSize; y < height; y += gridSize) {
-                if (Math.random() > 0.95) {
-                    ctx.beginPath();
-                    ctx.arc(x, y, 2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-        }
-        
-        // Сбрасываем тень
-        ctx.shadowBlur = 0;
-        
-        offset += 0.3;
-        requestAnimationFrame(drawGrid);
-    }
-    
-    drawGrid();
-    
-    // Добавляем динамические сканирующие линии
-    let scanLineY = 0;
-    function drawScanLines() {
-        if (!ctx) return;
-        
-        ctx.fillStyle = 'rgba(0, 255, 234, 0.03)';
-        ctx.fillRect(0, scanLineY, width, 3);
-        
-        scanLineY += 2;
-        if (scanLineY > height) scanLineY = 0;
-        
-        requestAnimationFrame(drawScanLines);
-    }
-    
-    drawScanLines();
-    
-    // Обновляем размеры при изменении окна
-    window.addEventListener('resize', () => {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-        
-        // Обновляем градиент
-        const newGradient = ctx.createLinearGradient(0, 0, width, height);
-        newGradient.addColorStop(0, '#0a0a0f');
-        newGradient.addColorStop(1, '#0d0d1a');
-        gradient.addColorStop(0, '#0a0a0f');
-        gradient.addColorStop(1, '#0d0d1a');
-    });
-}
-
 // Статические конфигурации
 const STATIC_CONFIGS = {
     FI: `[Interface]
@@ -156,7 +44,7 @@ PersistentKeepalive = 25
 Endpoint = 89.22.237.214:4500`
 };
 
-// Функция для получения текущего времени по Москве (UTC+3)
+// Функция для получения текущего времени по Москве (UTC+3) в формате часы_минуты
 function getMoscowTimeString() {
     const now = new Date();
     const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
@@ -185,16 +73,15 @@ function downloadFile(content, fileName, mimeType = 'application/text') {
             iosMessage.style.left = '20px';
             iosMessage.style.right = '20px';
             iosMessage.style.backgroundColor = 'rgba(0,0,0,0.9)';
-            iosMessage.style.color = '#00ffea';
+            iosMessage.style.color = '#00ff64';
             iosMessage.style.padding = '12px';
             iosMessage.style.borderRadius = '12px';
             iosMessage.style.textAlign = 'center';
             iosMessage.style.fontSize = '12px';
             iosMessage.style.zIndex = '9999';
             iosMessage.style.backdropFilter = 'blur(10px)';
-            iosMessage.style.border = '1px solid #00ffea';
-            iosMessage.style.boxShadow = '0 0 20px rgba(0,255,234,0.3)';
-            iosMessage.innerHTML = `📁 Файл ${fileName} сохранён<br>Нажмите и удерживайте, чтобы сохранить`;
+            iosMessage.style.border = '1px solid rgba(0,255,100,0.3)';
+            iosMessage.innerHTML = `📁 Файл ${fileName} сохранён<br>Нажмите и удерживайте, чтобы сохранить, если скачивание не началось`;
             document.body.appendChild(iosMessage);
             setTimeout(() => iosMessage.remove(), 3000);
         }
@@ -252,12 +139,8 @@ async function generateConfig(configType, buttonId) {
     }
 }
 
-// Запуск
-document.addEventListener('DOMContentLoaded', () => {
-    initCyberpunkBackground();
-    
-    document.getElementById('staticFI')?.addEventListener('click', () => downloadStaticConfig('FI'));
-    document.getElementById('staticDE')?.addEventListener('click', () => downloadStaticConfig('DE'));
-    document.getElementById('generateButton1')?.addEventListener('click', () => generateConfig(1, 'generateButton1'));
-    document.getElementById('generateButton2')?.addEventListener('click', () => generateConfig(2, 'generateButton2'));
-});
+// Назначаем обработчики
+document.getElementById('staticFI').onclick = () => downloadStaticConfig('FI');
+document.getElementById('staticDE').onclick = () => downloadStaticConfig('DE');
+document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
+document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
