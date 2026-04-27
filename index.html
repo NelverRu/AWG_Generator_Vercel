@@ -20,59 +20,15 @@
             position: relative;
         }
 
-        /* Динамический градиентный фон */
-        .animated-bg {
+        /* Статичный черный фон */
+        .static-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(125deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 10s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Плавающие частицы */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(0, 255, 100, 0.15);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            background: #0a0a0a;
         }
 
         /* Контейнер */
@@ -134,7 +90,6 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            /* Центрирование содержимого карточки по горизонтали */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -167,7 +122,7 @@
             transform: translateY(0);
         }
 
-        /* Иконки карточек - центрирование */
+        /* Иконки карточек */
         .card-icon {
             font-size: 52px;
             margin-bottom: 16px;
@@ -201,14 +156,22 @@
             border: 1px solid rgba(0, 255, 100, 0.3);
         }
 
-        /* Секция с динамическими конфигами */
+        /* Секционные заголовки - салатовые, одинаковой высоты, красивый шрифт */
         .section-title {
             text-align: center;
             font-size: 28px;
             font-weight: 600;
-            color: white;
+            color: #00ff64;
             margin: 48px 0 24px;
             letter-spacing: -0.5px;
+            height: 40px;
+            line-height: 40px;
+            font-family: 'Inter', sans-serif;
+            text-shadow: 0 0 15px rgba(0, 255, 100, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
         .dynamic-grid {
@@ -338,6 +301,8 @@
             .section-title {
                 font-size: 24px;
                 margin: 32px 0 20px;
+                height: 36px;
+                line-height: 36px;
             }
             
             .toast {
@@ -356,34 +321,15 @@
     </style>
 </head>
 <body>
-    <div class="animated-bg"></div>
-    <div class="particles" id="particles"></div>
+    <div class="static-bg"></div>
 
     <div class="container">
         <div class="header">
             <div class="logo">AmneziaWG</div>
-            <div class="subtitle">Статические конфигурации</div>
+            <div class="subtitle">Генератор конфигураций</div>
         </div>
 
-        <!-- Статические конфиги с центрированным содержимым -->
-        <div class="cards-grid">
-            <div class="card" id="staticFI">
-                <div class="card-icon">🇫🇮</div>
-                <div class="card-title">Финляндия</div>
-                <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('FI')">
-                    <span class="button__text">Скачать конфигурацию</span>
-                </button>
-            </div>
-
-            <div class="card" id="staticDE">
-                <div class="card-icon">🇩🇪</div>
-                <div class="card-title">Германия</div>
-                <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('DE')">
-                    <span class="button__text">Скачать конфигурацию</span>
-                </button>
-            </div>
-        </div>
-
+        <!-- Динамические конфигурации (теперь сверху) -->
         <div class="section-title">Динамические конфигурации</div>
         <div class="dynamic-grid">
             <div class="card">
@@ -402,31 +348,31 @@
                 </button>
             </div>
         </div>
+
+        <!-- Статические конфигурации (теперь снизу) -->
+        <div class="section-title">Статические конфигурации</div>
+        <div class="cards-grid">
+            <div class="card" id="staticFI">
+                <div class="card-icon">🇫🇮</div>
+                <div class="card-title">Финляндия</div>
+                <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('FI')">
+                    <span class="button__text">Скачать конфигурацию</span>
+                </button>
+            </div>
+
+            <div class="card" id="staticDE">
+                <div class="card-icon">🇩🇪</div>
+                <div class="card-title">Германия</div>
+                <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('DE')">
+                    <span class="button__text">Скачать конфигурацию</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div id="toast" class="toast"></div>
 
     <script>
-        // ========== АНИМАЦИЯ ФОНА ==========
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 30 : 60;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 4 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = Math.random() * 8 + 4 + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        createParticles();
-
         // ========== УВЕДОМЛЕНИЯ ==========
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
@@ -543,7 +489,6 @@ Endpoint = 89.22.237.214:4500`
 
             try {
                 // Эмуляция бэкенда /api/warp
-                // В реальности здесь был бы fetch, но для демонстрации генерируем конфиг на клиенте
                 const deviceType = configType === 1 ? 'PC' : 'Mobile';
                 const timestamp = Date.now();
                 
@@ -600,7 +545,7 @@ Endpoint = dyn-${deviceType.toLowerCase()}.amneziawg.net:${Math.floor(Math.rando
             }
         }
 
-        // Вспомогательная функция для генерации псевдо-случайного base64 ключа (вида как в WireGuard)
+        // Вспомогательная функция для генерации псевдо-случайного base64 ключа
         function generateFakeKey(length = 44) {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
             let result = '';
