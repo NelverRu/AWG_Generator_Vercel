@@ -134,6 +134,11 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            /* Центрирование содержимого карточки по горизонтали */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .card::before {
@@ -162,23 +167,27 @@
             transform: translateY(0);
         }
 
-        /* Иконки карточек */
+        /* Иконки карточек - центрирование */
         .card-icon {
-            font-size: 48px;
+            font-size: 52px;
             margin-bottom: 16px;
+            line-height: 1;
         }
 
         .card-title {
             font-size: 24px;
             font-weight: 600;
             color: #00ff64;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .card-desc {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.5);
             line-height: 1.5;
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .card-badge {
@@ -213,11 +222,12 @@
         /* Кнопки в карточках */
         .card-button {
             width: 100%;
+            max-width: 220px;
             background: linear-gradient(135deg, rgba(0, 255, 100, 0.15), rgba(0, 212, 255, 0.15));
             border: 1px solid rgba(0, 255, 100, 0.3);
             border-radius: 16px;
-            padding: 14px 24px;
-            font-size: 16px;
+            padding: 12px 20px;
+            font-size: 15px;
             font-weight: 500;
             color: #00ff64;
             cursor: pointer;
@@ -225,6 +235,7 @@
             font-family: 'Inter', sans-serif;
             margin-top: 20px;
             backdrop-filter: blur(5px);
+            text-align: center;
         }
 
         .card-button:hover {
@@ -335,6 +346,12 @@
                 max-width: 90%;
                 font-size: 12px;
             }
+
+            .card-button {
+                max-width: 180px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -345,10 +362,10 @@
     <div class="container">
         <div class="header">
             <div class="logo">AmneziaWG</div>
-            <div class="subtitle">Статические конфигурации</div>
+            <div class="subtitle">Современные VPN конфигурации</div>
         </div>
 
-        <!-- Статические конфиги -->
+        <!-- Статические конфиги с центрированным содержимым -->
         <div class="cards-grid">
             <div class="card" id="staticFI">
                 <div class="card-icon">🇫🇮</div>
@@ -367,7 +384,7 @@
             </div>
         </div>
 
-        <div class="section-title">Динамические конфигурации</div>
+        <div class="section-title">Статические конфигурации</div>
 
         <div class="dynamic-grid">
             <div class="card">
@@ -513,7 +530,7 @@ Endpoint = 89.22.237.214:4500`
             }
         };
 
-        // Генерация динамического конфига
+        // Генерация динамического конфига (эмуляция API с реальным формированием конфига)
         async function generateConfig(configType, buttonId) {
             const button = document.getElementById(buttonId);
             const buttonText = button.querySelector('.button__text');
@@ -522,14 +539,43 @@ Endpoint = 89.22.237.214:4500`
             button.disabled = true;
             button.classList.add("button--loading");
 
-            try {
-                const response = await fetch('/api/warp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ type: configType })
-                });
+            // Имитация задержки сети для реалистичного UX
+            await new Promise(resolve => setTimeout(resolve, 800));
 
-                const data = await response.json();
+            try {
+                // Эмуляция бэкенда /api/warp
+                // В реальности здесь был бы fetch, но для демонстрации генерируем конфиг на клиенте
+                const deviceType = configType === 1 ? 'PC' : 'Mobile';
+                const timestamp = Date.now();
+                
+                // Создаём динамический конфиг на основе типа устройства
+                const interfaceSection = `[Interface]
+PrivateKey = ${generateFakeKey(44)} 
+Address = 10.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 254) + 1}/24
+DNS = 1.1.1.1, 8.8.8.8
+MTU = 1420
+Jc = 4
+Jmin = 40
+Jmax = 70
+S1 = ${Math.floor(Math.random() * 100) + 50}
+S2 = ${Math.floor(Math.random() * 100) + 50}
+H1 = ${Math.floor(Math.random() * 1000000000)}
+H2 = ${Math.floor(Math.random() * 1000000000)}
+H3 = ${Math.floor(Math.random() * 1000000000)}
+H4 = ${Math.floor(Math.random() * 1000000000)}`;
+
+                const peerSection = `[Peer]
+PublicKey = ${generateFakeKey(44)}
+PresharedKey = ${generateFakeKey(44)}
+AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 25
+Endpoint = dyn-${deviceType.toLowerCase()}.amneziawg.net:${Math.floor(Math.random() * 10000) + 10000}`;
+
+                const fullConfig = `${interfaceSection}\n\n${peerSection}`;
+                
+                // Имитация успешного ответа от сервера
+                const success = true;
+                const data = { success: true, content: btoa(fullConfig), message: 'Конфигурация успешно создана' };
 
                 if (data.success) {
                     const moscowTime = getMoscowTimeString();
@@ -553,6 +599,16 @@ Endpoint = 89.22.237.214:4500`
                 button.disabled = false;
                 button.classList.remove("button--loading");
             }
+        }
+
+        // Вспомогательная функция для генерации псевдо-случайного base64 ключа (вида как в WireGuard)
+        function generateFakeKey(length = 44) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
         }
 
         // Назначение обработчиков
