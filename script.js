@@ -1,4 +1,4 @@
-// Статические конфигурации
+// Статические конфигурации  
 const STATIC_CONFIGS = {
     FI: `[Interface]
 PrivateKey = aG1Lg0PM/8ebyFq9fQaOBIbaKIKRaOhBNp5rdoj9snM=
