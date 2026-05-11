@@ -212,24 +212,21 @@
             <img class="logo-image" src="https://warp-generator.github.io/logo.svg" alt="logo" onerror="this.style.display='none'">
         </div>
 
-        <div class="dynamic-stack">
-            <div class="card">
-                <div class="card-icon">💻</div>
-                <div class="card-title">Компьютер</div>
-                <button id="generatePc" class="card-button">
-                    <span class="button__text">Сгенерировать</span>
-                </button>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📱</div>
-                <div class="card-title">Телефон</div>
-                <button id="generateMobile" class="card-button">
-                    <span class="button__text">Сгенерировать</span>
-                </button>
-            </div>
+<div class="dynamic-stack">
+    <div class="card">
+        <div class="card-icon">💻📱</div>
+        <div class="card-title">Генератор конфигураций</div>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+            <button id="generatePc" class="card-button" style="margin: 0;">
+                <span class="button__text">Для Компьютера</span>
+            </button>
+            <button id="generateMobile" class="card-button" style="margin: 0;">
+                <span class="button__text">Для Телефона</span>
+            </button>
         </div>
-      </div>
+    </div>
+</div>
 
     <script>
         // Получение московского времени
