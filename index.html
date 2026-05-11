@@ -214,22 +214,21 @@
 
 <div class="dynamic-stack">
     <div class="card">
-        <div class="card-icon">💻📱</div>
+        <div class="card-icon">💻______📱</div>
         <div class="card-title">Генератор конфигураций</div>
         
         <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
             <button id="generatePc" class="card-button" style="margin: 0;">
-                <span class="button__text">Для Компьютера</span>
+                <span class="button__text">Компьютер</span>
             </button>
             <button id="generateMobile" class="card-button" style="margin: 0;">
-                <span class="button__text">Для Телефона</span>
+                <span class="button__text">Смартфон</span>
             </button>
         </div>
     </div>
 </div>
 
     <script>
-        // Получение московского времени
         function getMoscowTimeString() {
             const now = new Date();
             const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
@@ -238,8 +237,7 @@
             return `${hours}_${minutes}`;
         }
 
-        // Скачивание файла
-        function downloadFile(content, fileName) {
+            function downloadFile(content, fileName) {
             const blob = new Blob([content], { type: 'application/x-wireguard-profile' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -251,8 +249,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Показать ошибку
-        function showError(message) {
+            function showError(message) {
             const toast = document.createElement('div');
             toast.className = 'error-toast';
             toast.textContent = `❌ ${message}`;
@@ -260,7 +257,6 @@
             setTimeout(() => toast.remove(), 4000);
         }
 
-        // Генерация конфига через API (ваш warp.js бэкенд)
         async function generateConfig(configType, buttonId) {
             const button = document.getElementById(buttonId);
             const buttonText = button.querySelector('.button__text');
@@ -270,7 +266,6 @@
             button.classList.add("button--loading");
 
             try {
-                // Определяем URL API (если вы не на Vercel, замените на свой)
                 const apiUrl = '/api/warp';
                 
                 const response = await fetch(apiUrl, {
@@ -286,7 +281,6 @@
                 const data = await response.json();
 
                 if (data.success && data.content) {
-                    // Декодируем base64 в строку конфига
                     const configContent = atob(data.content);
                     const moscowTime = getMoscowTimeString();
                     const devicePrefix = configType === 1 ? 'PC' : 'Mob';
@@ -313,7 +307,6 @@
             }
         }
 
-        // Назначение обработчиков
         document.getElementById('generatePc')?.addEventListener('click', (e) => {
             e.stopPropagation();
             generateConfig(1, 'generatePc');
@@ -324,7 +317,6 @@
             generateConfig(2, 'generateMobile');
         });
 
-        // Ripple эффект на карточках
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') return;
