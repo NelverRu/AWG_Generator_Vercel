@@ -8,16 +8,16 @@
 
 - **Динамические конфигурации** – генерируются случайные ключи, IP-адреса и параметры с подписью текущего времени.
 <div align="center">
-<h2>🔽Ссылка на генератор конфигураций🔽</h2>
+<h2>✅Ссылка на генератор конфигураций✅</h2>
 
 <br>
 <div align="center">
 <a href="https://awg-generator.vercel.app/" target="_blank">
-<img src="https://img.shields.io/badge/🔗_awggenerator.vercel.app-FF9800?style=for-the-badge&logo=vercel&logoColor=white&labelColor=FF9800&color=FF9800" alt="Генератор конфигураций AmneziaWG">
-</a>
+<img src="https://img.shields.io/badge/🔗_awggenerator.vercel.app-32CD32?style=for-the-badge&logo=vercel&logoColor=black" alt="Генератор конфигураций AmneziaWG">
 
 ___
-<img width="922" height="643" alt="1" src="https://github.com/user-attachments/assets/359daad6-20c8-4f4c-8153-6205e6ac2619" />
+<img width="922" height="161" alt="1" src="https://github.com/user-attachments/assets/3f85aaff-4f75-4d59-8f9e-c4fc3e0c2bfd" />   
+
 
 
 
