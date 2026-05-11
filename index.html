@@ -67,14 +67,13 @@
 
        .dynamic-stack {
            width: 100%;
-           max-width: 800px;        /* увеличил, чтобы поместились рядом */
+           max-width: 800px;  
            display: flex;
-           flex-direction: row;     /* ← меняем column на row */
+           flex-direction: row; 
            gap: 30px;
            margin-bottom: 30px;
-           justify-content: center; /* центрируем по горизонтали */
-           flex-wrap: wrap;         /* если экран узкий — перенос на новую строку */
-       }
+           justify-content: center;
+        }
 
         .card {
             background: rgba(255, 255, 255, 0.03);
@@ -298,7 +297,6 @@
                     
                     downloadFile(configContent, fileName);
                     
-                    buttonText.textContent = `✅ Готово!`;
                     setTimeout(() => {
                         if (buttonText) buttonText.textContent = originalText;
                     }, 2000);
