@@ -12,8 +12,8 @@
 
 <br>
 <div align="center">
-<a href="https://awg-generator.vercel.app/" target="_blank">
-<img src="https://img.shields.io/badge/🔗_awggenerator.vercel.app-32CD32?style=for-the-badge&logo=vercel&logoColor=black" alt="Генератор конфигураций AmneziaWG">
+<a href="https://green-awg-gen.vercel.app/" target="_blank">
+<img src="https://img.shields.io/badge/🔗_green-awg-gen.vercel.app-32CD32?style=for-the-badge&logo=vercel&logoColor=black" alt="Генератор конфигураций AmneziaWG">
 
 ___
  
