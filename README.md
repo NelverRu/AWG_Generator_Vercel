@@ -13,7 +13,7 @@
 <br>
 <div align="center">
 <a href="https://green-awg-gen.vercel.app/" target="_blank">
-<img src="https://img.shields.io/badge/🔗_green-awg-gen.vercel.app-32CD32?style=for-the-badge&logo=vercel&logoColor=black" alt="Генератор конфигураций AmneziaWG">
+<img src="https://img.shields.io/badge/🔗_green_awg_gen.vercel.app-32CD32?style=for-the-badge&logo=vercel&logoColor=black" alt="Генератор конфигураций AmneziaWG">
 
 ___
  
